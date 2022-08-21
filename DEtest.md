@@ -3,15 +3,10 @@ task.wait(2)
 repeat  task.wait() until game:IsLoaded()
 
 
-loadstring(game:HttpGet('https://raw.githubusercontent.com/CodexHubX/CodexHubX/main/Loading1.md'))()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/CodexHubX/CodexHubX/main/Loading2.md'))()
-
-  
 
 
 
-if getgenv().swqaweqrxwqeqtq == "kbvopbkoewpjjiqi"  then
-if getgenv().opmcz4897kdjasdwe == "bmfsdweqgkjgoeji" then
+
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local mouse = game.Players.LocalPlayer:GetMouse()
@@ -54,6 +49,8 @@ getgenv().EquipCh = data.EquipCh
 getgenv().Char1 = data.Char1
 getgenv().Char2 = data.Char2
 getgenv().Char3 = data.Char3
+getgenv().autoattackxx = data.autoattackxx
+getgenv().Godmode = data.Godmode    
     function updatejson()
 
         local xdata = {
@@ -82,8 +79,9 @@ getgenv().Char3 = data.Char3
       EquipCh = getgenv().EquipCh ,
       Char1 = getgenv().Char1,
       Char2 = getgenv().Char2,
-      Char3 = getgenv().Char3
-        
+      Char3 = getgenv().Char3,
+      autoattackxx = getgenv().autoattackxx,
+      Godmode = getgenv().Godmode
         }
 
         local json = HttpService:JSONEncode(xdata)
@@ -1146,8 +1144,9 @@ end)
 Page1:Toggle("⚙  Auto Infinite", getgenv().autoinf,function(value)
 
 end) 
-Page1:Toggle("⚙  God Mode ( skill 1 - 4 not works , E,R only )", false,function(value)
-
+Page1:Toggle("⚙  God Mode ( skill 1 - 4 not works , E,R only )", getgenv().Godmode,function(value)
+getgenv().Godmode = value
+updatejson()
 end) 
 
 Page1:Toggle("⚙  Auto Rejoin ( if disconnect )", getgenv().Rejoin,function(value)
@@ -1232,23 +1231,13 @@ Page1:Toggle("⚙ Limited Ticket", getgenv().LiTicket,function(value)
 end)
 
 Page1:Seperator("⚙ Save Config BossRush")
-local Tixvsda = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.BossRushFrame.BossRushEntryPassCount
-Page1:Label("Ticket :  " ..tostring(tostring(Tixvsda.Text)))
-Page1:Label("Limited ticket :  " ..tostring(getgenv().tickeyli))
-Page1:Line()
-pcall(function()
-Characterme = {}
-local Raidxx = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.SpeedRaidCharacterSelector.Shade.SpeedRaidCharacterInventoryScrollingFrame
-     for x,y in pairs (Raidxx:GetChildren()) do
-    if y:IsA("ImageButton") then
-    table.insert(Characterme,y.Name)
-    end
-end  
-end)
 
-
+local ticketll = Page1:Label("Limited ticket :  " ..tostring(getgenv().tickeyli))
 
 Page1:Line()
+
+
+
 
 
 
@@ -1260,29 +1249,11 @@ end)
 Page1:Toggle("⚙  Speed Raid Random Character", getgenv().AutoRandom,function(value)
     getgenv().AutoRandom = value
 end)
-Page1:Seperator("⚙ Setting Speed Raid")
 
 
-Page1:Button("⚙ Check Character List",function()
-pcall(function()
-   for i,v in pairs(getgenv().ListXC)do
-game:GetService("StarterGui"):SetCore("SendNotification",{     
-Title = "Character List",     
-Text = " ( "..tostring(i).." ) " ..tostring(v),
-Duration = 5, })   
-   
-end
-    end)
-end)
-Page1:Button("⚙ Clear all Character List",function()
- table.clear(getgenv().ListXC)
-game:GetService("StarterGui"):SetCore("SendNotification",{   
- Title = "Notification",     
-Text = "Clear all Character list",
-Duration = 5, })   
-  updatejson()
-end)
-Page1:Seperator("⚙ Setting Add Character list")
+
+
+Page1:Seperator("⚙ Speed Selects Character")
 
 
 Page1:Textbox("Add Character ( Character Name )",false,function(value)
@@ -1315,9 +1286,31 @@ Duration = 5, })
     end
     end
 end)
-
-
-
+Page1:Seperator("⚙ Speed Raid Character")
+Page1:Button("⚙ Check Character List",function()
+pcall(function()
+   for i,v in pairs(getgenv().ListXC)do
+game:GetService("StarterGui"):SetCore("SendNotification",{     
+Title = "Character List",     
+Text = " ( "..tostring(i).." ) " ..tostring(v),
+Duration = 5, })   
+   
+end
+    end)
+end)
+Page1:Button("⚙ Clear all Character List",function()
+ table.clear(getgenv().ListXC)
+game:GetService("StarterGui"):SetCore("SendNotification",{   
+ Title = "Notification",     
+Text = "Clear all Character list",
+Duration = 5, })   
+  updatejson()
+end)
+Page1:Seperator("⚙ Speed Raid Character list")
+for xx,yy in pairs(getgenv().ListXC)do
+    Page1:Label("( "..tostring(xx).." ) : "..tostring(yy))
+end
+Page1:Line()
 
 
 Page2:Seperator("⚙ Character Setting")
@@ -1332,33 +1325,37 @@ for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Center
 end    
 end)
 
-local Drop4 = Page2:Dropdown("⚙  Selects Main Character",CharacterMegive,function(value)
-getgenv().Char1 = value
-updatejson()
+
+
+Page2:Textbox("Add Character ( 1 ) ( Character Name )",false,function(value)
+  for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.Inventory.Frame.CharacterInventoryFrame.CharacterInventoryScrollingFrame:GetChildren())do
+    if tostring(value) == tostring(v) then
+    print("fol")    
+   getgenv().Char1 = value
+        updatejson()
+    end
+    end
+end)
+Page2:Textbox("Add Character ( 2 ) ( Character Name )",false,function(value)
+     for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.Inventory.Frame.CharacterInventoryFrame.CharacterInventoryScrollingFrame:GetChildren())do
+    if tostring(value) == tostring(v) then
+    print("fol")   
+   getgenv().Char2 = value
+  updatejson()      
+    end
+    end
 end)
 
-local Drop5 = Page2:Dropdown("⚙  Selects Assist( 1 ) Character",CharacterMegive,function(value)
-getgenv().Char2 = value
-updatejson()
-end)
-local Drop6 = Page2:Dropdown("⚙  Selects Assist( 2 ) Character",CharacterMegive,function(value)
-getgenv().Char3 = value
-updatejson()
-end)
-Page2:Button("⚙ Re Character",function()
-    Drop4:Clear()
-    Drop5:Clear()
-    Drop6:Clear()
-CharacterMegive = {}    
- for x,y in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.Inventory.Frame.CharacterInventoryFrame.CharacterInventoryScrollingFrame:GetChildren())do
-    if y:IsA("ImageButton") then
-    table.insert(CharacterMegive,y.Name)
-    Drop4:Add(y.Name)
-    Drop5:Add(y.Name)
-    Drop6:Add(y.Name)
+Page2:Textbox("Add Character ( 3 ) ( Character Name )",false,function(value)
+     for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.Inventory.Frame.CharacterInventoryFrame.CharacterInventoryScrollingFrame:GetChildren())do
+    if tostring(value) == tostring(v) then
+    print("fol")   
+   getgenv().Char3 = value
+  updatejson()      
     end
-end                             
+    end
 end)
+
 
 
 
@@ -1372,12 +1369,16 @@ Page2:Toggle("⚙  Auto Equip Character", getgenv().EquipCh,function(value)
 getgenv().EquipCh = value
 updatejson()
 end)
-Page2:Toggle("⚙  Character Find", false,function(value)
+Page2:Toggle("⚙  Character Find & auto Copy ", false,function(value)
  getgenv().hookchar = value
 end)
 
 Page9:Seperator("⚙ Setting autoskill")
-Page9:Toggle("⚙  auto skill ( 1 )", getgenv().Use1,function(value)
+Page9:Toggle("⚙  auto attack", getgenv().autoattackxx,function(value)
+getgenv().autoattackxx = value
+ updatejson()
+end)
+Page9:Toggle("⚙  Auto skill ( 1 )", getgenv().Use1,function(value)
 getgenv().Use1 = value
  updatejson()
 end)
@@ -1440,7 +1441,6 @@ end
     function Ignore()
     for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.SpeedRaidCharacterSelector.Shade.SpeedRaidCharacterInventoryScrollingFrame:GetChildren()) do
     if Ignore[v.Name] == true then
-        print("Yup")
     end
         end    
     end  
@@ -1650,27 +1650,42 @@ end
     getgenv().me = game.Players.LocalPlayer    
     getgenv().Moster = game:GetService("Workspace").Folders.Monsters
     for i,v in pairs(Moster:GetChildren())do
-    if v:FindFirstChild("LeftFoot") then
+    if v:FindFirstChild("LeftFoot") and getgenv().Godmode == false then    
     Target = v.LeftFoot
 	Distance = (me.Character.HumanoidRootPart.Position - Target.Position).Magnitude
     tw,ti = game:GetService("TweenService"),TweenInfo.new(Distance/getgenv().SpeedTween, Enum.EasingStyle.Linear)
     aaTween = tw:Create(me.Character.HumanoidRootPart,ti,{CFrame = v.LeftFoot.CFrame * CFrame.new(0,0,getgenv().dis) }) 
-    aaTween:Play()
-    end end end  
-    _G.Use1 = false
+    aaTween:Play() 
+    elseif v:FindFirstChild("HumanoidRootPart") and getgenv().Godmode == true then    
+    Target = v.HumanoidRootPart
+	Distance = (me.Character.HumanoidRootPart.Position - Target.Position).Magnitude
+    tw,ti = game:GetService("TweenService"),TweenInfo.new(Distance/getgenv().SpeedTween, Enum.EasingStyle.Linear)
+    aaTween = tw:Create(me.Character.HumanoidRootPart,ti,{CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,3) }) 
+    aaTween:Play()          
+        
+    end end end
+    
+    function autoattack()
+        if (Target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 7 then
+        game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, true, game, 1)
+        end    
+    end    
+        
+        
+    _G.Use1 = false 
     
     _G.NextUse = 1
     function auto1()
     local Skill1 = game:GetService("Players").LocalPlayer.PlayerGui.UniversalGui.UniversalCenterUIFrame.SlotsHolder.Skill1.SkillName    
-    if getgenv().Use1 == true and Skill1.Text ~= number and _G.Use1 == false then
+    if getgenv().Use1 == true and Skill1.Text ~= number and _G.Use1 == false and getgenv().Godmode == false then
     _G.Use1 = true    
-    elseif getgenv().Use1 == true and _G.Use1 == true and Skill1.Text ~= number and _G.NextUse == 1 then
+    elseif getgenv().Use1 == true and _G.Use1 == true and Skill1.Text ~= number and _G.NextUse == 1 and getgenv().Godmode == false then
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "One", false, game)
     wait(0.1)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "One", false, game)
      _G.Use1 = false
      _G.NextUse = 2
-    elseif Skill1.Text == number then
+    elseif Skill1.Text == number and getgenv().Godmode == false then
     _G.Use1 = false
     end
     end
@@ -1678,15 +1693,15 @@ end
      _G.Use2 = false  
     function auto2()
     local Skill2 = game:GetService("Players").LocalPlayer.PlayerGui.UniversalGui.UniversalCenterUIFrame.SlotsHolder.Skill2.SkillName    
-    if getgenv().Use2 == true and Skill2.Text ~= number and _G.Use2 == false then
+    if getgenv().Use2 == true and Skill2.Text ~= number and _G.Use2 == false and getgenv().Godmode == false then
     _G.Use2 = true
-    elseif getgenv().Use2 == true and _G.Use2 == true and Skill2.Text ~= number and _G.NextUse == 2 then
+    elseif getgenv().Use2 == true and _G.Use2 == true and Skill2.Text ~= number and _G.NextUse == 2 and getgenv().Godmode == false then
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Two", false, game)
      wait(0.1)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "Two", false, game)
      _G.Use2 = false
      _G.NextUse = 3
-     elseif Skill2.Text == number then
+     elseif Skill2.Text == number and getgenv().Godmode == false then
     _G.Use2 = false  
     end
     end
@@ -1694,15 +1709,15 @@ end
      _G.Use3 = false
     function auto3()
     local Skill3 = game:GetService("Players").LocalPlayer.PlayerGui.UniversalGui.UniversalCenterUIFrame.SlotsHolder.Skill3.SkillName    
-    if getgenv().Use3 == true and Skill3.Text ~= number and _G.Use3 == false then
+    if getgenv().Use3 == true and Skill3.Text ~= number and _G.Use3 == false and getgenv().Godmode == false then
     _G.Use3 = true
-    elseif   getgenv().Use3 == true and _G.Use3 == true and Skill3.Text ~= number and _G.NextUse == 3 then
+    elseif   getgenv().Use3 == true and _G.Use3 == true and Skill3.Text ~= number and _G.NextUse == 3 and getgenv().Godmode == false then
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Three", false, game)
     wait(0.1)   
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "Three", false, game)
     _G.Use3 = false
     _G.NextUse = 4
-    elseif Skill3.Text == number then
+    elseif Skill3.Text == number and getgenv().Godmode == false then
     _G.Use3 = false 
     end
     end
@@ -1710,15 +1725,15 @@ end
     _G.Use4 = false
     function auto4()
     local Skill4 = game:GetService("Players").LocalPlayer.PlayerGui.UniversalGui.UniversalCenterUIFrame.SlotsHolder.Skill4.SkillName    
-    if getgenv().Use4 == true and Skill4.Text ~= number and _G.Use4 == false then
+    if getgenv().Use4 == true and Skill4.Text ~= number and _G.Use4 == false and getgenv().Godmode == false then
     _G.Use4 = true
-     elseif getgenv().Use4 == true and _G.Use4 == true and Skill4.Text ~= number and _G.NextUse == 4 then
+     elseif getgenv().Use4 == true and _G.Use4 == true and Skill4.Text ~= number and _G.NextUse == 4 and getgenv().Godmode == false then
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Four", false, game)
      wait(0.1)   
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "Four", false, game)
      _G.Use4 = false
      _G.NextUse = 5
-     elseif Skill4.Text == number then
+     elseif Skill4.Text == number and getgenv().Godmode == false then
     _G.Use4 = false 
     end
     end
@@ -1755,8 +1770,86 @@ end
     end
     end
     
+      _G.Use5x = false
+       _G.NextUsex = 5
+    function auto5x()
+    local SkillE = game:GetService("Players").LocalPlayer.PlayerGui.UniversalGui.UniversalCenterUIFrame.SlotsHolder.SkillAssist1.SkillName    
+    if getgenv().Use5 == true and SkillE.Text ~= number and _G.Use5x == false then
+    _G.Use5x = true 
+    elseif  getgenv().Use5 == true and _G.Use5x == true and SkillE.Text ~= number  and  _G.NextUsex == 5 then
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+     wait(0.1)   
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "E", false, game)
+    _G.Use5x = false
+    _G.NextUsex = 6
+    elseif SkillE.Text == number then
+   _G.Use5x = false
+    end
+    end
     
-    
+    _G.Use6x = false
+    function auto6x()
+    local SkillR = game:GetService("Players").LocalPlayer.PlayerGui.UniversalGui.UniversalCenterUIFrame.SlotsHolder.SkillAssist2.SkillName    
+    if getgenv().Use6 == true and SkillR.Text ~= number and _G.Use6x == false then
+    _G.Use6x = true 
+     elseif  getgenv().Use6 == true and _G.Use6x == true and SkillR.Text ~= number and _G.NextUsex == 6 then
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "R", false, game)
+       wait(0.1)   
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "R", false, game)
+    _G.Use6x = false
+    _G.NextUsex = 5
+     elseif SkillR.Text == number then
+    _G.Use6x = false
+    end
+    end
+        
+  
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+        pcall(function()
+if  getgenv().Godmode  then
+wait(3)       
+local player = game.Players.LocalPlayer
+if player.Character then
+if player.Character:FindFirstChild("Humanoid") then
+player.Character.Humanoid.Name = "1"
+end
+local l = player.Character["1"]:Clone()
+l.Parent = player.Character
+l.Name = "Humanoid"; wait(0.1)
+player.Character["1"]:Destroy()
+workspace.CurrentCamera.CameraSubject = player.Character.Humanoid
+player.Character.Animate.Disabled = true; wait(0.1)
+player.Character.Animate.Disabled = false
+    wait(30)   
+end
+        end
+     end)
+    end
+end))
+
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+        pcall(function()
+if  getgenv().Godmode  then
+auto5x()
+auto6x()
+        end
+     end)
+    end
+end))
+
+        coroutine.resume(coroutine.create(function()
+    while task.wait() do
+        pcall(function()
+        if  getgenv().autoattackxx then
+        autoattack()
+           
+        end
+     end)
+    end
+end))
+
     coroutine.resume(coroutine.create(function()
     while task.wait() do
         pcall(function()
@@ -1820,10 +1913,11 @@ end)
 end))
 
 
+
     coroutine.resume(coroutine.create(function()
     while task.wait() do
         pcall(function()
-        if getgenv().autofarm then
+        if getgenv().autofarm and getgenv().Godmode == false then
         if (Target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= getgenv().dis+5 then
 auto1()
 auto2()
@@ -1838,10 +1932,9 @@ auto6()
     end
 end))
 
-end
-end
 
-  
+
+   
 local old;
 old = hookmetamethod(game,"__namecall",function(self,...)
 local Args = {...}
@@ -1874,6 +1967,8 @@ elseif getgenv().LiTicket == nil then
 getgenv().LiTicket = false
 elseif getgenv().tickeyli == nil then
 getgenv().tickeyli = 0
+elseif getgenv().Godmode == nil then
+    getgenv().Godmode = false
 end
 end
 
@@ -1887,6 +1982,5 @@ coroutine.resume(coroutine.create(function()
     end
 end))
       
-
 
 
