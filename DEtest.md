@@ -51,6 +51,7 @@ getgenv().Char2 = data.Char2
 getgenv().Char3 = data.Char3
 getgenv().autoattackxx = data.autoattackxx
 getgenv().Godmode = data.Godmode    
+getgenv().antiafk = data.antiafk
     function updatejson()
 
         local xdata = {
@@ -81,7 +82,9 @@ getgenv().Godmode = data.Godmode
       Char2 = getgenv().Char2,
       Char3 = getgenv().Char3,
       autoattackxx = getgenv().autoattackxx,
-      Godmode = getgenv().Godmode
+      Godmode = getgenv().Godmode,
+    antiafk = getgenv().antiafk     
+            
         }
 
         local json = HttpService:JSONEncode(xdata)
@@ -1153,7 +1156,10 @@ Page1:Toggle("⚙  Auto Rejoin ( if disconnect )", getgenv().Rejoin,function(val
 getgenv().Rejoin = value
 updatejson()
 end)
-
+Page1:Toggle("⚙  Anti afk", getgenv().antiafk,function(value)
+getgenv().antiafk = value
+updatejson()
+end)
 Page1:Line()
 Page1:Seperator("⚙ Auto Dimension")
 
@@ -1670,7 +1676,17 @@ end
         game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, true, game, 1)
         end    
     end    
-        
+        function antidd()
+        local collx = game:GetService("Workspace").CollectionBox
+        local Me = game.Players.LocalPlayer
+        for i,v in pairs(collx:GetChildren())do
+        if v:IsA("Part") and v.Name == "ADLogo" then   
+        if (v.Position - Me.Character.HumanoidRootPart.Position).magnitude < 1000 then    
+            game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, true, game, 1)
+            end
+            end
+            end
+        end    
         
     _G.Use1 = false 
     
@@ -1889,7 +1905,16 @@ end))
      end)
     end
 end))
-      
+                coroutine.resume(coroutine.create(function()
+    while task.wait() do
+        pcall(function()
+        if  getgenv().antiafk  then
+        wait(60)    
+        antidd()
+        end
+     end)
+    end
+end))
 
 
 
