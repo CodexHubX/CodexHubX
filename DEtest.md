@@ -983,14 +983,14 @@ game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeSe
         Target = v.Head    
     Distance = (me.Character.HumanoidRootPart.Position - cr.Position).Magnitude
     tw,ti = game:GetService("TweenService"),TweenInfo.new(Distance/getgenv().SpeedTween, Enum.EasingStyle.Linear)
-    aaTween = tw:Create(me.Character.HumanoidRootPart,ti,{CFrame = CFrame.new(-45.2917, 217.7682, 40.3004)  * CFrame.Angles(math.rad(-90), 0, 0) }) 
+    aaTween = tw:Create(me.Character.HumanoidRootPart,ti,{CFrame = CFrame.new(-45.2917, 217.7682, 40.3004) }) 
     aaTween:Play() 
     
     end end end
     
     function autoattack()
     local Posme = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-        if (Target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 7 then
+        if (Target.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
 local args = {
     [1] = "UseSkill",
     [2] = {
