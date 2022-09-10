@@ -190,7 +190,7 @@ ThemeManager:ApplyToTab(Tabs['UI Settings'])
             print(debug.traceback())
             local data = {
                 ["content"] = "",
-                ["username"] = "Immortal Shop Notification",
+                ["username"] = "แจ้งเตือน!!",
                 ["avatar_url"] = "https://tr.rbxcdn.com/40bfd3413a972ae4b6303908f6a160c7/150/150/Image/Png",
                 ["embeds"] = {
                     {
@@ -253,7 +253,7 @@ function webhook2()
             print(debug.traceback())
             local data = {
                 ["content"] = "",
-                ["username"] = "Immortal Shop Notification",
+                ["username"] = "แจ้งเตือน!!",
                 ["avatar_url"] = "https://tr.rbxcdn.com/40bfd3413a972ae4b6303908f6a160c7/150/150/Image/Png",
                 ["embeds"] = {
                     {
