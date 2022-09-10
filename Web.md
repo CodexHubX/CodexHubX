@@ -1,8 +1,7 @@
-task.wait(2)
+
 repeat  task.wait() until game:IsLoaded()
 
 
-    wait(1)
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local mouse = game.Players.LocalPlayer:GetMouse()
@@ -308,7 +307,7 @@ end
 
 
     coroutine.resume(coroutine.create(function()
-    while task.wait(.1) do
+    while task.wait() do
     pcall(function()
     if getgenv().inf1 or getgenv().inf2 then
     if game.PlaceId == 8304191830 then
@@ -333,4 +332,3 @@ else
     writefile(savefilename, json)
     sex()
 end
-
