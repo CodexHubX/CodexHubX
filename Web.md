@@ -1,6 +1,6 @@
 task.wait(2)
 repeat  task.wait() until game:IsLoaded()
-if game.PlaceId == 8304191830 then
+
 
     wait(1)
 local HttpService = game:GetService("HttpService")
@@ -333,4 +333,4 @@ else
     writefile(savefilename, json)
     sex()
 end
-end
+
