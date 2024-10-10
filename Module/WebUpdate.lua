@@ -65,10 +65,37 @@ local function PortalStringGenerator(Items)
 end
 
 local DataMirrorController;
+local GameUnits = {};
+
+
 if Id == 'Pixel' then 
     DataMirrorController = LocalPlayer:WaitForChild('PlayerScripts') and LocalPlayer.PlayerScripts:WaitForChild('Controllers')
     and LocalPlayer.PlayerScripts.Controllers:WaitForChild('DataMirrorController') and require(LocalPlayer.PlayerScripts.Controllers.DataMirrorController);
+
+    local GameAssets = game:GetService("ReplicatedStorage").Assets;
+    local unitModules;
+
+    for _,v in next, GameAssets:GetChildren()do
+        if v.Name == 'Units' then 
+            unitModules = v;
+        end;
+    end;
+
+    for int,v in next, unitModules:GetChildren() do
+        if v:IsA('ModuleScript') then 
+            local unitModule = require(v);
+            if unitModule.Name and unitModule.Rarity and (unitModule.Rarity == 'Godly' or unitModule.Rarity == 'Secret') then 
+                -- table.insert(GameUnits,unitModule.Name)
+                GameUnits[unitModule.Name] = unitModule.DisplayName
+            end;
+        end;
+    end;
 end;
+
+-- GameUnits['Grand Master'] = 'P1'
+-- GameUnits['Scorch'] = 'P2'
+-- table.insert(GameUnits,'Grand Master')
+-- table.insert(GameUnits,'Scorch')
 
 local function Update()
     local Payload; 
@@ -123,15 +150,24 @@ local function Update()
         }
     elseif Id == 'Pixel' then
         local Profiles = DataMirrorController.Profiles[LocalPlayer]
+        local unitDrop = '';
+        local Rareunitcount = 0;
+
+        for _,v in next, Profiles.Inventory.Units.All do 
+            if v and GameUnits[v.Name] then 
+                unitDrop = unitDrop..tostring(GameUnits[v.Name])..','
+                Rareunitcount+=1;
+            end;
+        end;
 
         Payload = {
             pc = PC,
             username = LocalPlayer.Name,
             level = Profiles.Statistics.Level,
-            state = PlaceId == 15939808257 and 'Lobby' or 'Ingame',
+            state = unitDrop,
             gems = Profiles.Currency.Gems or 0,
             gold = Profiles.Currency.Coins or 0,
-            traitRerolls = 0,
+            traitRerolls = Rareunitcount,
             bp = 'Soon',
         }
     end
