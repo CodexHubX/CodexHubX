@@ -32,7 +32,7 @@
     }
 
 	if getgenv().LoadCustomDrawing then 
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/CodexHubX/CodeXPaidVersion/main/drawing.lua"))();
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/CodexHubX/CodexHubX/refs/heads/main/Module/Drawing.lua"))();
 	end;
 
     local Settigs = Library.Settigs;
