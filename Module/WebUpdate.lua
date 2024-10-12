@@ -165,8 +165,8 @@ local function Update()
             username = LocalPlayer.Name,
             level = Profiles.Statistics.Level,
             state = unitDrop,
-            gems = Profiles.Currency.Gems or 0,
-            gold = Profiles.Currency.Coins or 0,
+            gems = math.floor(Profiles.Currency.Gems) or 0,
+            gold = math.floor(Profiles.Currency.Coins) or 0,
             traitRerolls = Rareunitcount,
             bp = 'Soon',
         }
