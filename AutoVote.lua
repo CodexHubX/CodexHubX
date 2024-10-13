@@ -1,9 +1,10 @@
+
     repeat task.wait() until game:IsLoaded() and game.PlaceId ~= 15939808257;
 
     local LocalPlayer = game.Players.LocalPlayer;
     local PlayerGui = LocalPlayer.PlayerGui;
     local GuiService = game:GetService('GuiService');
-    local CFrameCheck = CFrame.new(-14671.482421875, 608.4627685546875, -2232.433837890625)
+    local CFrameCheck = CFrame.new(-13083.48828125, 601.469970703125, -443.3150634765625)
 
     while task.wait(0.03) do 
         local result,Error = pcall(function()
