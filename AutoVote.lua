@@ -4,7 +4,7 @@
     local LocalPlayer = game.Players.LocalPlayer;
     local PlayerGui = LocalPlayer.PlayerGui;
     local GuiService = game:GetService('GuiService');
-    local CFrameCheck = CFrame.new(-13083.48828125, 601.469970703125, -443.3150634765625)
+    local CFrameCheck = CFrame.new(-14614.33203125, 704.2572631835938, -1511.652587890625)
 
     while task.wait(0.03) do 
         local result,Error = pcall(function()
