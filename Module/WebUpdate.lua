@@ -151,14 +151,14 @@ local function Update()
     elseif Id == 'Pixel' then
         local Profiles = DataMirrorController.Profiles[LocalPlayer]
         local unitDrop = '';
-        local Rareunitcount = 0;
+        -- local Rareunitcount = 0;
 
-        for _,v in next, Profiles.Inventory.Units.All do 
-            if v and GameUnits[v.Name] then 
-                unitDrop = unitDrop..tostring(GameUnits[v.Name])..','
-                Rareunitcount+=1;
-            end;
-        end;
+        -- for _,v in next, Profiles.Inventory.Units.All do 
+        --     if v and GameUnits[v.Name] then 
+        --         unitDrop = unitDrop..tostring(GameUnits[v.Name])..','
+        --         Rareunitcount+=1;
+        --     end;
+        -- end;
 
         Payload = {
             pc = PC,
@@ -167,7 +167,7 @@ local function Update()
             state = unitDrop,
             gems = math.floor(Profiles.Currency.Gems) or 0,
             gold = math.floor(Profiles.Currency.Coins) or 0,
-            traitRerolls = Rareunitcount,
+            traitRerolls = math.floor(Profiles.Currency.Pumpkins) or 0,
             bp = 'Soon',
         }
     end
