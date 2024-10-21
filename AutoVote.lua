@@ -12,7 +12,7 @@ while task.wait(0.03) do
             if LocalPlayer:DistanceFromCharacter(CFrameCheck.Position) <= 500 
                 or LocalPlayer:DistanceFromCharacter(CFrameCheck2.Position) <= 500 then 
                 local args = {
-                    [1] = "Hard"
+                    [1] = "Medium"
                 }
                 
                 game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.VotingService.RF.Vote:InvokeServer(unpack(args))
